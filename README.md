@@ -1,2 +1,2 @@
-# bezpieczna-rodzina
+# parentuide
 Platforma wspierająca rodziców i rodziny
