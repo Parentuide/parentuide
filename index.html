@@ -75,7 +75,12 @@ async function submitSurvey(e){
  try{const r=await fetch(SUPABASE_FUNCTION_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:currentType,answers,turnstileToken:token})});const data=await r.json().catch(()=>({}));
  if(!r.ok||data.success!==true){if(r.status===429)throw Error("Limit wysyłania ankiet został osiągnięty. Spróbuj ponownie za kilkanaście minut.");throw Error(data.error||"Nie udało się wysłać ankiety. Spróbuj ponownie.");}
  form.reset();status.textContent="Dziękujemy! Twoje odpowiedzi zostały wysłane.";status.classList.add("show","success");window.turnstile.reset(turnstileWidget);
+ // Po sukcesie ukryj pytania i przycisk wysyłania; pozostaw wyraźny przycisk zamknięcia.
+ form.querySelectorAll(".question, .turnstile-slot").forEach(el=>el.style.display="none");
+ btn.style.display="none";
+ const closeBtn=form.querySelector('.form-actions button[type="button"]');
+ if(closeBtn)closeBtn.textContent="Zamknij ankietę";
  }catch(err){status.textContent=err.message||"Wystąpił błąd połączenia. Sprawdź internet i spróbuj ponownie.";status.classList.add("show","error");if(window.turnstile&&turnstileWidget!==null)window.turnstile.reset(turnstileWidget);}
- finally{btn.disabled=false;btn.textContent="Wyślij ankietę";}
+ finally{if(btn.style.display!=="none"){btn.disabled=false;btn.textContent="Wyślij ankietę";}}
 }
 </script></body></html>
