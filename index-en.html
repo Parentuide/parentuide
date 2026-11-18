@@ -60,7 +60,7 @@ function renderForm(type){
  form.innerHTML=out;form.onsubmit=submitSurvey;
 }
 function openSurvey(type){currentType=type;const s=surveys[type];document.getElementById("modal-title").textContent=s.title;document.getElementById("modal-description").textContent=s.intro;document.getElementById("privacy-link").href=PRIVACY_POLICY_URL;renderForm(type);document.getElementById("survey-modal").classList.add("open");document.body.style.overflow="hidden";turnstileWidget=null;waitTurnstile();}
-function waitTurnstile(){if(!currentType||!document.getElementById("survey-modal").classList.contains("open"))return;if(window.turnstile){try{turnstileWidget=window.turnstile.render("#turnstile-slot",{sitekey:TURNSTILE_SITE_KEY});}catch(e){}}else setTimeout(waitTurnstile,250);}
+function waitTurnstile(){if(!currentType||!document.getElementById("survey-modal").classList.contains("open"))return;if(window.turnstile){try{turnstileWidget=window.turnstile.render("#turnstile-slot",{sitekey:TURNSTILE_SITE_KEY,language:"en"});}catch(e){}}else setTimeout(waitTurnstile,250);}
 function closeSurvey(){document.getElementById("survey-modal").classList.remove("open");document.body.style.overflow="";currentType=null;}
 document.getElementById("survey-modal").addEventListener("click",e=>{if(e.target.id==="survey-modal")closeSurvey();});document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSurvey();});
 async function submitSurvey(e){
