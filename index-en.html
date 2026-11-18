@@ -67,7 +67,7 @@ async function submitSurvey(e){
  e.preventDefault();const form=e.currentTarget,status=form.querySelector(".status"),btn=form.querySelector('button[type="submit"]');status.className="status";status.textContent="";
  if(!window.turnstile||turnstileWidget===null){status.textContent="The security check is still loading. Please wait a moment and try again.";status.classList.add("show","error");return;}
  const token=window.turnstile.getResponse(turnstileWidget);if(!token){status.textContent="Complete the security check before submitting the survey.";status.classList.add("show","error");return;}
- const fd=new FormData(form),answers={};for(const [k,v] of fd.entries()){if(k!=="email"&&k!=="contact_consent")answers[k]=String(v).trim();}
+ const fd=new FormData(form),answers={};for(const [k,v] of fd.entries()){if(k!=="email"&&k!=="contact_consent"&&k!=="cf-turnstile-response")answers[k]=String(v).trim();}
  const email=String(fd.get("email")||"").trim(),consent=fd.get("contact_consent")==="true";
  if(consent&&!email){status.textContent="To consent to contact, please enter your email address.";status.classList.add("show","error");return;}
  if(email&&consent){answers.email=email;answers.contact_consent=true;}
