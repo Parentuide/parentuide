@@ -67,7 +67,7 @@ async function submitSurvey(e){
  e.preventDefault();const form=e.currentTarget,status=form.querySelector(".status"),btn=form.querySelector('button[type="submit"]');status.className="status";status.textContent="";
  if(!window.turnstile||turnstileWidget===null){status.textContent="Weryfikacja bezpieczeństwa jeszcze się ładuje. Odczekaj chwilę i spróbuj ponownie.";status.classList.add("show","error");return;}
  const token=window.turnstile.getResponse(turnstileWidget);if(!token){status.textContent="Ukończ weryfikację bezpieczeństwa przed wysłaniem ankiety.";status.classList.add("show","error");return;}
- const fd=new FormData(form),answers={};for(const [k,v] of fd.entries()){if(k!=="email"&&k!=="contact_consent")answers[k]=String(v).trim();}
+ const fd=new FormData(form),answers={};for(const [k,v] of fd.entries()){if(k!=="email"&&k!=="contact_consent"&&k!=="cf-turnstile-response")answers[k]=String(v).trim();}
  const email=String(fd.get("email")||"").trim(),consent=fd.get("contact_consent")==="true";
  if(consent&&!email){status.textContent="Aby wyrazić zgodę na kontakt, podaj adres e-mail.";status.classList.add("show","error");return;}
  if(email&&consent){answers.email=email;answers.contact_consent=true;}
